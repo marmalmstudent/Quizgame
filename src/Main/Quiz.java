@@ -112,5 +112,10 @@ public class Quiz
 	{
 		return QuizDB.DB_PATH + quizentry[currQuestionId][2];
 	}
+	
+	public int getCurrQuestionID()
+	{
+		return currQuestionId;
+	}
 }
 

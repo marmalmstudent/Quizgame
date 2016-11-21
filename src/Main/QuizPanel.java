@@ -42,6 +42,11 @@ public class QuizPanel extends JPanel
 	{
 		progressLabel.setText(quiz.getQCount()+"/"+quiz.getNbrRounds()+" questions answered.");
 		ImageIcon rawPicture = new ImageIcon(quiz.getCurrImage());
+		if (rawPicture.getIconHeight() == -1 && rawPicture.getIconWidth() == -1)
+		{ // image was not found
+			System.err.println("Database Line " + quiz.getCurrQuestionID() + ": Image was not found: " + quiz.getCurrImage());
+			rawPicture = new ImageIcon(QuizDB.DB_PATH + "default.png");
+		}
 		if (rawPicture.getIconHeight() > defaultImageHeight || rawPicture.getIconWidth() > defaultImageWidth)
 		{ // image is bigger than Default
 			if ((double)(rawPicture.getIconHeight())/rawPicture.getIconWidth() > (double)(defaultImageHeight)/defaultImageWidth)

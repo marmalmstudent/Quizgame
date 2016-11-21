@@ -71,10 +71,16 @@ public class QuizDB extends JPanel
 		    }
 			this.database = new String[nDatabaseEntry];
 			quizentry = new String[nDatabaseEntry][3];
-			for (int i=0; i<nDatabaseEntry; i++) {
-				this.database[i] = rawDatabase[i];
-				quizentry[i] = rawDatabase[i].split(" __ ");
-				quizentry[i][0] = questionFixMultilineRead(quizentry[i][0]);
+			String[] thisLineEntry;
+			for (int i=0; i<nDatabaseEntry; i++)
+			{
+				thisLineEntry = rawDatabase[i].split(" __ ");
+				if (thisLineEntry.length == 3)
+				{
+					this.database[i] = rawDatabase[i];
+					quizentry[i] = thisLineEntry;
+					quizentry[i][0] = questionFixMultilineRead(quizentry[i][0]);
+				}
 			}
 		    in.close();
 		    inFile.close();
@@ -93,9 +99,23 @@ public class QuizDB extends JPanel
         	BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     		for (int i=0; i<database.length-1; i++)
     		{
-    			writer.write(database[i]+"\n");
+    			if (database[i].split(" __ ").length == 3)
+    			{
+    				writer.write(database[i]+"\n");
+    			}
+    			else
+    			{
+    				System.err.println("Corrupt database entry at line " + i + ". Skipping...");
+    			}
     		}
-    		writer.write(database[database.length-1]);
+			if (database[database.length-1].split(" __ ").length == 3)
+			{
+	    		writer.write(database[database.length-1]);
+			}
+			else
+			{
+				System.err.println("Corrupt database entry at line " + (database.length-1) + ". Skipping...");
+			}
     		writer.close();
     		out.close();
         } catch (IOException e) {
