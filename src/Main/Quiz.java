@@ -12,6 +12,13 @@ public class Quiz
 	public boolean isPlaying;
 	private QuizDB qdb;
 
+	public static void main(String[] args)
+	{
+		Quiz q = new Quiz();
+		q.qdb = new QuizDB();
+		new QuizFrame(q, q.qdb);
+	}
+
 	public Quiz()
 	{
 		this.score = 0;
@@ -20,18 +27,10 @@ public class Quiz
 		this.history = new String[nbrRounds][4];
 	}
 	
-	public void genNewQuestionId()
-	{
-		currQuestionId = (int)(quizentry.length*Math.random());
-	}
-	
 	public void checkAnswer(String answer)
 	{
 		boolean correctAnswer = answer.equalsIgnoreCase(quizentry[currQuestionId][1]);
-		String[] currHistEntry = {quizentry[currQuestionId][0],
-				answer,
-				quizentry[currQuestionId][1],
-				((correctAnswer) ? "CORRECT" : "INCORRECT")};
+		String[] currHistEntry = {quizentry[currQuestionId][0], answer, quizentry[currQuestionId][1], ((correctAnswer) ? "CORRECT" : "INCORRECT")};
 		if(correctAnswer)
 			score++;
 		history[qCount] = currHistEntry;
@@ -50,72 +49,20 @@ public class Quiz
 		isPlaying = true;
 		return;
 	}
-
-	public static void main(String[] args)
-	{
-		Quiz q = new Quiz();
-		q.qdb = new QuizDB();
-		new QuizFrame(q, q.qdb);
-	}
 	
-	public void setScore(int score)
-	{
-		this.score = score;
-	}
+	public void genNewQuestionId() { currQuestionId = (int)(quizentry.length*Math.random()); }
 	
-	public int getScore()
-	{
-		return score;
-	}
-	
-	public void setQCount(int qCount)
-	{
-		this.qCount = qCount;
-	}
-	
-	public int getQCount()
-	{
-		return qCount;
-	}
-	
-	public void setNbrRounds(int nbrRounds)
-	{
-		this.nbrRounds = nbrRounds;
-	}
-	
-	public int getNbrRounds()
-	{
-		return nbrRounds;
-	}
-	
-	public void setHistory(int row, int col, String val)
-	{
-		this.history[row][col] = val;
-	}
-	
-	public String[][] getHistory()
-	{
-		return history;
-	}
-	
-	public String getCurrQuestion()
-	{
-		return quizentry[currQuestionId][0];
-	}
-	
-	public String getCurrAnswer()
-	{
-		return quizentry[currQuestionId][1];
-	}
-	
-	public String getCurrImage()
-	{
-		return QuizDB.DB_PATH + quizentry[currQuestionId][2];
-	}
-	
-	public int getCurrQuestionID()
-	{
-		return currQuestionId;
-	}
+	public void setScore(int score) { this.score = score; }
+	public int getScore() { return score; }
+	public void setQCount(int qCount) { this.qCount = qCount; }
+	public int getQCount() { return qCount; }
+	public void setNbrRounds(int nbrRounds) { this.nbrRounds = nbrRounds; }
+	public int getNbrRounds() { return nbrRounds; }
+	public void setHistory(int row, int col, String val) { this.history[row][col] = val; }
+	public String[][] getHistory() { return history; }
+	public String getCurrQuestion() { return quizentry[currQuestionId][0]; }
+	public String getCurrAnswer() { return quizentry[currQuestionId][1]; }
+	public String getCurrImage() { return QuizDB.DB_PATH + quizentry[currQuestionId][2]; }
+	public int getCurrQuestionID() { return currQuestionId; }
 }
 
